@@ -3,323 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Horarios - Choferes y Camiones</title>
-    <style>
-        
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        background-color: #eef2f5;
-        color: #333;
-        padding: 20px;
-    }
-
-    .container {
-        max-width: 1100px;
-        margin: 0 auto;
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    h1 {
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 2rem;
-        color: #007BFF;
-    }
-
-    .button {
-        display: block;
-        width: 250px;
-        margin: 20px auto;
-        padding: 12px;
-        background-color: #28a745;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: bold;
-        text-align: center;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .button:hover {
-        background-color: #218838;
-        transform: scale(1.05);
-    }
-
-    .tables-container {
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-    }
-
-    h2 {
-        margin-bottom: 15px;
-        color: #555;
-        border-left: 4px solid #007BFF;
-        padding-left: 10px;
-    }
-
-    .table-wrapper {
-        overflow-x: auto;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-        background-color: #ffffff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    th, td {
-        border: 1px solid #ddd;
-        padding: 12px;
-        text-align: left;
-    }
-
-    th {
-        background-color: #f8f9fa;
-        font-weight: bold;
-        color: #333;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-
-    tr:hover {
-        background-color: #e9f5ff;
-    }
-
-    .parada {
-        background-color: #ffe0e0;
-        color: #d9534f;
-        font-weight: bold;
-    }
-
-    .asignado {
-        background-color: #e2f5e3;
-        color: #5cb85c;
-        font-weight: bold;
-    }
-
-    @media (max-width: 768px) {
-        .container {
-            padding: 15px;
-        }
-
-        th, td {
-            padding: 10px;
-            font-size: 14px;
-        }
-
-        h1 {
-            font-size: 1.5rem;
-        }
-    }
-
-
-    </style>
+    <title>Sistema de Gestión de Choferes</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Gestor de Horarios - Choferes y Camiones</h1>
+        <h1>Sistema de Gestión de Choferes</h1>
         
-        <button id="generateButton" class="button">Generar Cronograma</button>
-        
-        <div class="tables-container">
-            <div class="table-section">
-                <h2>Horario Semanal</h2>
-                <div class="table-wrapper">
-                    <table id="scheduleTable">
-                        <thead>
-                            <tr>
-                                <th>Vehículo/Día</th>
-                                <th>Lunes</th>
-                                <th>Martes</th>
-                                <th>Miércoles</th>
-                                <th>Jueves</th>
-                                <th>Viernes</th>
-                                <th>Sábado</th>
-                                <th>Domingo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Camión 1</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Camión 2</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="schedule-controls">
+            <button id="prevWeek">Semana Anterior</button>
+            <span id="currentWeek"></span>
+            <button id="nextWeek">Siguiente Semana</button>
+        </div>
 
-            <div class="table-section">
-                <h2>Resumen de Choferes</h2>
-                <div class="table-wrapper">
-                    <table id="driversTable">
-                        <thead>
-                            <tr>
-                                <th>Chofer</th>
-                                <th>Días de Trabajo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Chofer 1</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Chofer 2</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Chofer 3</td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <div class="schedule-container">
+            <table id="scheduleTable">
+                <thead>
+                    <tr>
+                        <th>Recurso</th>
+                        <th>Lunes</th>
+                        <th>Martes</th>
+                        <th>Miércoles</th>
+                        <th>Jueves</th>
+                        <th>Viernes</th>
+                        <th>Sábado</th>
+                        <th>Domingo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="truck1Row">
+                        <td>Camión 1</td>
+                    </tr>
+                    <tr id="truck2Row">
+                        <td>Camión 2</td>
+                    </tr>
+                    <tr id="driver1Row">
+                        <td>Chofer 1</td>
+                    </tr>
+                    <tr id="driver2Row">
+                        <td>Chofer 2</td>
+                    </tr>
+                    <tr id="driver3Row">
+                        <td>Chofer 3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <span class="color-box working"></span> Trabajando
+            </div>
+            <div class="legend-item">
+                <span class="color-box resting"></span> Descanso
+            </div>
+            <div class="legend-item">
+                <span class="color-box maintenance"></span> Mantenimiento
             </div>
         </div>
     </div>
-
-    <script>
-        const diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-        const choferes = ['Chofer 1', 'Chofer 2', 'Chofer 3'];
-        const camiones = ['Camión 1', 'Camión 2'];
-
-        class ScheduleManager {
-            constructor() {
-                this.schedule = {
-                    drivers: {},
-                    trucks: {
-                        'Camión 1': {
-                            parada: 'Martes',
-                            asignaciones: {}
-                        },
-                        'Camión 2': {
-                            parada: 'Jueves',
-                            asignaciones: {}
-                        }
-                    }
-                };
-            }
-
-            generateSchedule() {
-                // Resetear el cronograma
-                this.schedule.drivers = {};
-                this.schedule.trucks['Camión 1'].asignaciones = {};
-                this.schedule.trucks['Camión 2'].asignaciones = {};
-
-                // Asignar días consecutivos a cada chofer
-                choferes.forEach((chofer, index) => {
-                    let startDay = index * 2;
-                    const daysAssigned = [];
-                    
-                    for (let i = 0; i < 4; i++) {
-                        let day = (startDay + i) % 7;
-                        daysAssigned.push(diasSemana[day]);
-                    }
-                    
-                    this.schedule.drivers[chofer] = {
-                        diasTrabajo: daysAssigned
-                    };
-                });
-
-                // Asignar choferes a camiones
-                diasSemana.forEach(dia => {
-                    if (dia !== 'Martes') {
-                        this.schedule.trucks['Camión 1'].asignaciones[dia] = choferes.find(chofer => 
-                            this.schedule.drivers[chofer].diasTrabajo.includes(dia)
-                        );
-                    }
-                    
-                    if (dia !== 'Jueves') {
-                        this.schedule.trucks['Camión 2'].asignaciones[dia] = choferes.find(chofer => 
-                            this.schedule.drivers[chofer].diasTrabajo.includes(dia) &&
-                            (!this.schedule.trucks['Camión 1'].asignaciones[dia] || 
-                             this.schedule.trucks['Camión 1'].asignaciones[dia] !== chofer)
-                        );
-                    }
-                });
-
-                this.updateTables();
-            }
-
-            updateTables() {
-                // Actualizar tabla de horarios
-                const scheduleTable = document.getElementById('scheduleTable');
-                const rows = scheduleTable.getElementsByTagName('tr');
-
-                // Actualizar filas de camiones
-                camiones.forEach((camion, index) => {
-                    const row = rows[index + 1]; // +1 para saltar el encabezado
-                    const cells = row.getElementsByTagName('td');
-
-                    diasSemana.forEach((dia, diaIndex) => {
-                        const cell = cells[diaIndex + 1]; // +1 para saltar la columna de nombre
-                        cell.className = ''; // Resetear clases
-
-                        if (this.schedule.trucks[camion].parada === dia) {
-                            cell.textContent = 'PARADA';
-                            cell.className = 'parada';
-                        } else {
-                            const choferAsignado = this.schedule.trucks[camion].asignaciones[dia];
-                            cell.textContent = choferAsignado || '-';
-                            if (choferAsignado) {
-                                cell.className = 'asignado';
-                            }
-                        }
-                    });
-                });
-
-                // Actualizar tabla de choferes
-                const driversTable = document.getElementById('driversTable');
-                const driverRows = driversTable.getElementsByTagName('tr');
-
-                choferes.forEach((chofer, index) => {
-                    const row = driverRows[index + 1]; // +1 para saltar el encabezado
-                    const diasCell = row.cells[1];
-                    diasCell.textContent = this.schedule.drivers[chofer]?.diasTrabajo.join(', ') || '-';
-                });
-            }
-        }
-
-        // Inicializar el gestor de horarios
-        const scheduleManager = new ScheduleManager();
-
-        // Agregar evento al botón
-        document.getElementById('generateButton').addEventListener('click', () => {
-            scheduleManager.generateSchedule();
-        });
-    </script>
+    <script src="script3.js"></script>
 </body>
 </html>
